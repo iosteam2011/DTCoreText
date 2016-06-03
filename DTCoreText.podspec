@@ -1,9 +1,9 @@
 Pod::Spec.new do |spec|
   spec.name         = 'DTCoreText'
-  spec.version      = '1.6.17'
-  spec.platform     = :ios, '4.3'
+  spec.version      = '1.6.18'
+  spec.platform     = :ios, '7.0'
   spec.license      = 'BSD'
-  spec.source       = { :git => 'https://github.com/Cocoanetics/DTCoreText.git', :tag => spec.version.to_s }
+  spec.source       = { :git => 'https://github.com/vicStudio/DTCoreText.git', :tag => spec.version.to_s }
   spec.source_files = 'Core/Source/*.{h,m,c}'
   spec.dependency 'DTFoundation/Core', '~>1.7.5'
   spec.dependency 'DTFoundation/UIKit', '~>1.7.5'
@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'DTFoundation/DTAnimatedGIF', '~>1.7.5'
   spec.frameworks   = 'MediaPlayer', 'QuartzCore', 'CoreText', 'CoreGraphics', 'ImageIO'
   spec.requires_arc = true
-  spec.homepage     = 'https://github.com/Cocoanetics/DTCoreText'
+  spec.homepage     = 'https://github.com/vicStudio/DTCoreText'
   spec.summary      = 'Methods to allow using HTML code with CoreText.'
   spec.author       = { 'Oliver Drobnik' => 'oliver@cocoanetics.com' }
   spec.documentation_url = 'http://docs.cocoanetics.com/DTCoreText'

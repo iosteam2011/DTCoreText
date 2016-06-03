@@ -65,25 +65,30 @@ NSString * const DTLazyImageViewDidFinishDownloadNotification = @"DTLazyImageVie
 		return;
 	}
 	
-	@autoreleasepool 
+    // begin:修改了超时时间, 原始时间是10s，现在更改为60s @oulijian 2016-06-03
+	@autoreleasepool
 	{
 		if (!_urlRequest)
 		{
-			_urlRequest = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:10.0];
+			_urlRequest = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60.0];
 		}
 		else
 		{
 			[_urlRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
-			[_urlRequest setTimeoutInterval:10.0];
+			[_urlRequest setTimeoutInterval:60.0];
 		}
 		
-		_connection = [[NSURLConnection alloc] initWithRequest:_urlRequest delegate:self startImmediately:NO];
-		[_connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-
-		[[NSNotificationCenter defaultCenter] postNotificationName:DTLazyImageViewWillStartDownloadNotification object:self];
-		
-		[_connection start];
+		// 降低资源暂用 ** 权宜之计 - 解决办法:将网络请求改为按需加载
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			_connection = [[NSURLConnection alloc] initWithRequest:_urlRequest delegate:self startImmediately:NO];
+			[_connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:DTLazyImageViewWillStartDownloadNotification object:self];
+			
+			[_connection start];
+		});
 	}
+	// end @oulijian 2016-06-03
 }
 
 - (void)didMoveToSuperview
