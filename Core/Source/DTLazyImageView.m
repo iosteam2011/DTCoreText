@@ -85,14 +85,15 @@ NSString * const DTLazyImageViewDidFinishDownloadNotification = @"DTLazyImageVie
 	
 	@autoreleasepool 
 	{
+        // begin:修改了超时时间, 原始时间是10s，现在更改为60s @oulijian 2016-12-13
 		if (!_urlRequest)
 		{
-			_urlRequest = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:10.0];
+			_urlRequest = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60.0];
 		}
 		else
 		{
 			[_urlRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
-			[_urlRequest setTimeoutInterval:10.0];
+			[_urlRequest setTimeoutInterval:60.0];
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:DTLazyImageViewWillStartDownloadNotification object:self];
