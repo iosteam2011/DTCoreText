@@ -329,6 +329,7 @@ didReceiveResponse:(NSURLResponse *)response
 #if DTCORETEXT_USES_NSURLSESSION
 	[_dataTask cancel];
 	[_session invalidateAndCancel];
+	_session = nil;
 #else
 	[_connection cancel];
 #endif
@@ -358,6 +359,7 @@ didCompleteWithError:(nullable NSError *)error
 	
 #if DTCORETEXT_USES_NSURLSESSION
 	[_session finishTasksAndInvalidate];
+	_session = nil;
 	_dataTask = nil;
 #else
 	_connection = nil;
@@ -377,6 +379,7 @@ didCompleteWithError:(nullable NSError *)error
 {
 #if DTCORETEXT_USES_NSURLSESSION
 	[_session invalidateAndCancel];
+	_session = nil;
 	_dataTask = nil;
 #else
 	_connection = nil;
